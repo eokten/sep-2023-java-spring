@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: sep-2023-java-spring
+
+reference-data:
+  categories: Товари для дому, Будівельні інструменти, Фарби
+  offices:
+    - name: "Будівельний магазин 1"
+      contactNumber: "(+380) 23 123 45 67"
+      address:
+        city: "Львів"
+        street: "Окружна"
+        building: "3Д"
+    - name: "Будівельний магазин 2"
+      contactNumber: "(+380) 23 123 45 68"
+      address:
+        city: "Київ"
+        street: "Будівельна"
+        building: "11Б"

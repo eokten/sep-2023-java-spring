@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: sep-2023-java-spring
+
+reference-data:
+  categories: Телефони, Планшети, Ноутбуки
+  offices:
+    - name: "Офіс Електроніки 1"
+      contactNumber: "(+380) 23 123 45 67"
+      address:
+        city: "Львів"
+        street: "Кульпарківська"
+        building: "342Д"
+    - name: "Офіс Електроніки 1"
+      contactNumber: "(+380) 23 123 45 68"
+      address:
+        city: "Київ"
+        street: "Володимирська"
+        building: "123Б"

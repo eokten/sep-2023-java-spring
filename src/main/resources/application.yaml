@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: sep-2023-java-spring
+  profiles:
+    active: store1
