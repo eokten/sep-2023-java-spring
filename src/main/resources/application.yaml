@@ -3,3 +3,13 @@ spring:
     name: sep-2023-java-spring
   profiles:
     active: store1
+  datasource:
+    url: "jdbc:postgres://localhost:5433"
+    username: "product-service-db-user"
+    password: "product-service-db-password"
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true

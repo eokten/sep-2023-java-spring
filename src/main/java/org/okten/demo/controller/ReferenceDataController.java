@@ -1,4 +1,4 @@
-package org.okten.demo;
+package org.okten.demo.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.okten.demo.properties.Office;
