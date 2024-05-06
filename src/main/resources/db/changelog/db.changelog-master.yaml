@@ -40,3 +40,12 @@ databaseChangeLog:
       changes:
         - sqlFile:
             path: "classpath:/db/changelog/changes/set-default-description-for-all-products.sql"
+  - changeSet:
+      id: "1.0.4"
+      author: "eokten"
+      changes:
+        - addColumn:
+            tableName: "products"
+            column:
+              name: "category"
+              type: "text"
