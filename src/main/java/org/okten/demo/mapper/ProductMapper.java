@@ -15,6 +15,7 @@ public class ProductMapper {
                 .price(entity.getPrice())
                 .availability(entity.getAvailability())
                 .category(entity.getCategory())
+                .owner(entity.getOwner())
                 .build();
     }
 
@@ -25,6 +26,7 @@ public class ProductMapper {
         product.setPrice(dto.getPrice());
         product.setAvailability(dto.getAvailability());
         product.setCategory(dto.getCategory());
+        product.setOwner(dto.getOwner());
         return product;
     }
 
@@ -47,6 +49,10 @@ public class ProductMapper {
 
         if (updateWith.getCategory() != null) {
             target.setCategory(updateWith.getCategory());
+        }
+
+        if (updateWith.getOwner() != null) {
+            target.setOwner(updateWith.getOwner());
         }
 
         return target;

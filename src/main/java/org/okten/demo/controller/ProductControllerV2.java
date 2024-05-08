@@ -3,6 +3,8 @@ package org.okten.demo.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.okten.demo.dto.ProductDto;
+import org.okten.demo.dto.ReviewDto;
+import org.okten.demo.facade.ReviewFacade;
 import org.okten.demo.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +30,8 @@ public class ProductControllerV2 {
 
     private final ProductService productService;
 
+    private final ReviewFacade reviewFacade;
+
     @GetMapping("/products/{id}")
     public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
         return ResponseEntity.of(productService.findProduct(id));
@@ -52,5 +56,16 @@ public class ProductControllerV2 {
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok().build();
+    }
+
+    // Variant 2
+    @GetMapping("/products/{productId}/reviews")
+    public ResponseEntity<List<ReviewDto>> getReviews(@PathVariable("productId") Long productId) {
+        return ResponseEntity.ok(reviewFacade.getReviews(productId));
+    }
+
+    @PostMapping("/products/{productId}/reviews")
+    public ResponseEntity<ReviewDto> getReviews(@PathVariable("productId") Long productId, @RequestBody ReviewDto reviewDto) {
+        return ResponseEntity.ok(reviewFacade.createReview(productId, reviewDto));
     }
 }

@@ -28,4 +28,6 @@ public class Product {
     private ProductAvailability availability;
 
     private String category;
+
+    private String owner;
 }
