@@ -14,6 +14,17 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ErrorHandler {
 
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<ErrorDto> handleAnyException(Exception e) {
+        e.printStackTrace();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ErrorDto.builder()
+                        .details(e.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .build());
+    }
+
     @ExceptionHandler({NoSuchElementException.class})
     public ResponseEntity<ErrorDto> handleNoSuchElementException(NoSuchElementException e) {
         return ResponseEntity

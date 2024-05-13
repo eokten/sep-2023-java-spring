@@ -2,6 +2,7 @@ package org.okten.demo.mapper;
 
 import org.okten.demo.dto.ProductDto;
 import org.okten.demo.entity.Product;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,6 +31,7 @@ public class ProductMapper {
         return product;
     }
 
+    @PreAuthorize("#target.owner == authentication.principal")
     public Product updatePartially(Product target, ProductDto updateWith) {
         if (updateWith.getName() != null) {
             target.setName(updateWith.getName());

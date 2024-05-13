@@ -2,10 +2,15 @@ package org.okten.demo.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.okten.demo.dto.ProductDto;
 import org.okten.demo.entity.Product;
 import org.okten.demo.mapper.ProductMapper;
 import org.okten.demo.repository.ProductRepository;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +25,7 @@ public class ProductService {
 
     private final ProductMapper productMapper;
 
+    @Secured({"ROLE_SELLER", "ROLE_ADMIN"})
     @Transactional
     public ProductDto createProduct(ProductDto productDto) {
         Product savedProduct = productRepository.save(productMapper.mapToEntity(productDto));
@@ -42,6 +48,21 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+
+        if (product.isEmpty()) {
+            return;
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String productOwner = product.get().getOwner();
+        String username = authentication.getPrincipal().toString();
+
+        if (!StringUtils.equalsIgnoreCase(productOwner, username)) {
+            throw new AccessDeniedException("Your are not allowed to delete this product");
+        }
+
         productRepository.deleteById(id);
     }
 

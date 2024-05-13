@@ -20,13 +20,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v2")
-public class ProductControllerV2 {
-
-    // SOAP - Simple Object Access Protocol - XML
-    // RESTful
-    // GraphQL
-    // GRPC (RPC) - Remote Procedure Call - protobuf, avro
+@RequestMapping("/v1")
+public class ProductController {
 
     private final ProductService productService;
 

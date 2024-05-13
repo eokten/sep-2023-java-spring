@@ -33,7 +33,7 @@ public class SendProductStats {
 
     private final MailService mailService;
 
-    @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.HOURS)
     public void sendStats() {
         log.info("Sending product stats...");
 
