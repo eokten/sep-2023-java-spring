@@ -7,6 +7,7 @@ import org.okten.demo.dto.ReviewDto;
 import org.okten.demo.facade.ReviewFacade;
 import org.okten.demo.service.ProductService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProducts());
     }
 
+    @Secured({"SELLER", "ADMIN"})
     @PostMapping("/products")
     public ResponseEntity<ProductDto> createProduct(@RequestBody @Valid ProductDto product) {
         return ResponseEntity.ok(productService.createProduct(product));

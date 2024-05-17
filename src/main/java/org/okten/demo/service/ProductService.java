@@ -25,7 +25,6 @@ public class ProductService {
 
     private final ProductMapper productMapper;
 
-    @Secured({"ROLE_SELLER", "ROLE_ADMIN"})
     @Transactional
     public ProductDto createProduct(ProductDto productDto) {
         Product savedProduct = productRepository.save(productMapper.mapToEntity(productDto));
