@@ -20,6 +20,16 @@
 	<properties>
 		<java.version>17</java.version>
 		<project.build.encoding>UTF-8</project.build.encoding>
+
+		<jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+		<swagger-annotations.version>2.2.20</swagger-annotations.version>
+
+		<openapi-generator.version>7.2.0</openapi-generator.version>
+
+		<product-service-openapi-spec.path>
+			${project.basedir}/src/main/resources/specification/product-service.openapi.yaml
+		</product-service-openapi-spec.path>
+		<api-package>org.example.rest</api-package>
 	</properties>
 
 	<dependencies>
@@ -54,6 +64,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.11.5</version>
@@ -78,6 +93,18 @@
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson-databind-nullable.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger-annotations.version}</version>
 		</dependency>
 
 		<dependency>
@@ -127,6 +154,49 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi-generator.version}</version> <!-- important for Spring Boot 3.x -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<id>generate-api</id>
+
+						<configuration>
+							<inputSpec>${product-service-openapi-spec.path}</inputSpec>
+
+							<!--https://openapi-generator.tech/docs/generators/spring -->
+							<generatorName>spring</generatorName>
+							<library>spring-boot</library>
+
+							<modelNameSuffix>Dto</modelNameSuffix>
+							<generateApis>true</generateApis>
+							<generateModels>true</generateModels>
+
+							<!-- ... a lot of other parameters here if needed -->
+
+							<!-- configuration -->
+							<configOptions>
+								<interfaceOnly>true</interfaceOnly>
+								<useBeanValidation>true</useBeanValidation>
+								<performBeanValidation>true</performBeanValidation>
+								<modelPackage>${api-package}.model</modelPackage>
+								<apiPackage>${api-package}.controller</apiPackage>
+								<useJakartaEe>true</useJakartaEe> <!-- important for Spring Boot 3.x -->
+								<useSpringBoot3>true</useSpringBoot3> <!-- important for Spring Boot 3.x -->
+								<sourceFolder>/src/main/java</sourceFolder>
+								<implFolder>/src/main/java</implFolder>
+								<serializableModel>true</serializableModel>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,23 +1,31 @@
 package org.okten.demo.mapper;
 
-import org.okten.demo.dto.ProductDto;
+import org.example.rest.model.ProductDto;
 import org.okten.demo.entity.Product;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.okten.demo.entity.ProductAvailability;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
 
     public ProductDto mapToDto(Product entity) {
-        return ProductDto.builder()
+        return new ProductDto()
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .price(entity.getPrice())
-                .availability(entity.getAvailability())
-                .category(entity.getCategory())
-                .owner(entity.getOwner())
-                .build();
+                .status(mapAvailability(entity.getAvailability()));
+    }
+
+    public ProductDto.StatusEnum mapAvailability(ProductAvailability availability) {
+        if (availability == null) {
+            return ProductDto.StatusEnum.OUT_OF_STOCK;
+        }
+        return switch (availability) {
+            case AVAILABLE -> ProductDto.StatusEnum.IN_STOCK;
+            case DISCONTINUED -> ProductDto.StatusEnum.DISCONTINUED;
+            default -> ProductDto.StatusEnum.OUT_OF_STOCK;
+        };
     }
 
     public Product mapToEntity(ProductDto dto) {
@@ -25,13 +33,9 @@ public class ProductMapper {
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
-        product.setAvailability(dto.getAvailability());
-        product.setCategory(dto.getCategory());
-        product.setOwner(dto.getOwner());
         return product;
     }
 
-    @PreAuthorize("#target.owner == authentication.principal")
     public Product updatePartially(Product target, ProductDto updateWith) {
         if (updateWith.getName() != null) {
             target.setName(updateWith.getName());
@@ -43,18 +47,6 @@ public class ProductMapper {
 
         if (updateWith.getPrice() != null) {
             target.setPrice(updateWith.getPrice());
-        }
-
-        if (updateWith.getAvailability() != null) {
-            target.setAvailability(updateWith.getAvailability());
-        }
-
-        if (updateWith.getCategory() != null) {
-            target.setCategory(updateWith.getCategory());
-        }
-
-        if (updateWith.getOwner() != null) {
-            target.setOwner(updateWith.getOwner());
         }
 
         return target;

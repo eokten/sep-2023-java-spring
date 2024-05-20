@@ -1,5 +1,6 @@
 package org.okten.demo.service;
 
+import org.example.rest.model.ProductDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -8,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.okten.demo.dto.ProductDto;
 import org.okten.demo.entity.Product;
 import org.okten.demo.entity.ProductAvailability;
 import org.okten.demo.mapper.ProductMapper;
@@ -40,14 +40,10 @@ class ProductServiceTest {
 
     @Test
     void createProduct_shouldSaveProduct() {
-        ProductDto productToCreate = ProductDto.builder()
+        ProductDto productToCreate = new ProductDto()
                 .name("product name")
                 .description("product description")
-                .price(1.99)
-                .category("product category")
-                .availability(ProductAvailability.AVAILABLE)
-                .owner("product owner")
-                .build();
+                .price(1.99);
 
         // when() is static method from org.mockito.Mockito class
         when(productRepository.save(any()))
@@ -62,8 +58,6 @@ class ProductServiceTest {
         // assertEquals() is static method from org.junit.jupiter.api.Assertions class
         assertEquals(productToCreate.getName(), productToSave.getName());
         assertEquals(productToCreate.getPrice(), productToSave.getPrice());
-        assertEquals(productToCreate.getAvailability(), productToSave.getAvailability());
-        assertEquals(productToCreate.getOwner(), productToSave.getOwner());
 
         // verify() is static method from org.mockito.Mockito class
         verify(productMapper).mapToEntity(any());

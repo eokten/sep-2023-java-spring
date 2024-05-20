@@ -2,10 +2,10 @@ package org.okten.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.example.rest.model.ProductDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.okten.demo.config.TestcontainersConfiguration;
-import org.okten.demo.dto.ProductDto;
 import org.okten.demo.entity.Product;
 import org.okten.demo.entity.ProductAvailability;
 import org.okten.demo.entity.User;
@@ -87,14 +87,10 @@ class ProductControllerTest {
     void createProduct_whenUserIsSeller_shouldCreateProduct() {
         createUser("SELLER");
 
-        String requestBody = objectMapper.writeValueAsString(ProductDto.builder()
+        String requestBody = objectMapper.writeValueAsString(new ProductDto()
                 .name("product name")
                 .description("product description")
-                .price(10.99)
-                .availability(ProductAvailability.AVAILABLE)
-                .category("sample_category1")
-                .owner(user.getUsername())
-                .build());
+                .price(10.99));
 
         String responseBody = mockMvc
                 .perform(post("/v1/products")
@@ -116,14 +112,10 @@ class ProductControllerTest {
     void createProduct_whenUserIsBuyer_shouldReturn400() {
         createUser("BUYER");
 
-        String requestBody = objectMapper.writeValueAsString(ProductDto.builder()
+        String requestBody = objectMapper.writeValueAsString(new ProductDto()
                 .name("product name")
                 .description("product description")
-                .price(10.99)
-                .availability(ProductAvailability.AVAILABLE)
-                .category("sample_category1")
-                .owner(user.getUsername())
-                .build());
+                .price(10.99));
 
         mockMvc
                 .perform(post("/v1/products")

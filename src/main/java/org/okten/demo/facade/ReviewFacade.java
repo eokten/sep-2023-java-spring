@@ -1,7 +1,7 @@
 package org.okten.demo.facade;
 
 import lombok.RequiredArgsConstructor;
-import org.okten.demo.dto.ProductDto;
+import org.example.rest.model.ProductDto;
 import org.okten.demo.dto.ReviewDto;
 import org.okten.demo.dto.SendMailDto;
 import org.okten.demo.service.MailService;
@@ -35,11 +35,11 @@ public class ReviewFacade {
         String subject = "New review for product %s".formatted(productOpt.get().getName());
         String text = "You have a new review with rating %s and text: '%s'".formatted(savedReview.getRating(), savedReview.getText());
 
-        mailService.sendMail(SendMailDto.builder()
-                .subject(subject)
-                .text(text)
-                .recipient(productOpt.get().getOwner())
-                .build());
+//        mailService.sendMail(SendMailDto.builder()
+//                .subject(subject)
+//                .text(text)
+//                .recipient(productOpt.get().getOwner())
+//                .build());
 
         return savedReview;
     }
