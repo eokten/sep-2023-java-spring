@@ -26,8 +26,8 @@ public class ProductController implements ProductsApi {
     }
 
     @Override
-    public ResponseEntity<List<ProductDto>> getProducts() {
-        return ResponseEntity.ok(productService.getProducts());
+    public ResponseEntity<List<ProductDto>> getProducts(String category) {
+        return ResponseEntity.ok(productService.getProducts(category));
     }
 
     @Override

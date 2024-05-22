@@ -14,6 +14,7 @@ public class ProductMapper {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .price(entity.getPrice())
+                .category(entity.getCategory())
                 .status(mapAvailability(entity.getAvailability()));
     }
 
@@ -33,6 +34,7 @@ public class ProductMapper {
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
         product.setPrice(dto.getPrice());
+        product.setCategory(dto.getCategory());
         return product;
     }
 
@@ -47,6 +49,20 @@ public class ProductMapper {
 
         if (updateWith.getPrice() != null) {
             target.setPrice(updateWith.getPrice());
+        }
+
+        if (updateWith.getCategory() != null) {
+            target.setCategory(updateWith.getCategory());
+        }
+
+        if (updateWith.getQuantity() != null) {
+            if (updateWith.getQuantity() > 0) {
+                target.setAvailability(ProductAvailability.AVAILABLE);
+            } else if (updateWith.getQuantity() == 0) {
+                target.setAvailability(ProductAvailability.OUT_OF_STOCK);
+            } else {
+                target.setAvailability(ProductAvailability.NOT_AVAILABLE);
+            }
         }
 
         return target;

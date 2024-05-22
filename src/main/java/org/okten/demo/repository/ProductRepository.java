@@ -19,4 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "select * from products where price <= :price", nativeQuery = true)
     List<Product> findAllByPriceLessThanEqualNative(Double price);
+
+    List<Product> findAllByCategory(String category);
 }

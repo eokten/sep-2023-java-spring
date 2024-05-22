@@ -23,6 +23,13 @@ paths:
       summary: "Get all products"
       description: "Fetch all existing products"
       operationId: getProducts
+      parameters:
+        - in: query
+          name: category
+          required: false
+          schema:
+            type: string
+          description: "Category name"
       responses:
         '200':
           $ref: "#/components/responses/ProductList"
@@ -149,6 +156,8 @@ components:
           maximum: 1000
           writeOnly: true
         description:
+          type: string
+        category:
           type: string
         status:
           type: string

@@ -71,4 +71,12 @@ public class ProductService {
                 .map(productMapper::mapToDto)
                 .toList();
     }
+
+    public List<ProductDto> getProducts(String category) {
+        return productRepository
+                .findAllByCategory(category)
+                .stream()
+                .map(productMapper::mapToDto)
+                .toList();
+    }
 }
