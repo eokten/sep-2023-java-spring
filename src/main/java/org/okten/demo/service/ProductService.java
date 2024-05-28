@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.example.rest.model.ProductDto;
+import org.okten.demo.dto.event.ProductCreatedEvent;
 import org.okten.demo.entity.Product;
 import org.okten.demo.mapper.ProductMapper;
 import org.okten.demo.repository.ProductRepository;
@@ -24,9 +25,17 @@ public class ProductService {
 
     private final ProductMapper productMapper;
 
+    private final ProductEventProducer productEventProducer;
+
     @Transactional
     public ProductDto createProduct(ProductDto productDto) {
         Product savedProduct = productRepository.save(productMapper.mapToEntity(productDto));
+        productEventProducer.publishProductCreatedEvent(ProductCreatedEvent.builder()
+                .productId(savedProduct.getId())
+                .name(savedProduct.getName())
+                .category(savedProduct.getCategory())
+                .price(savedProduct.getPrice())
+                .build());
         return productMapper.mapToDto(savedProduct);
     }
 

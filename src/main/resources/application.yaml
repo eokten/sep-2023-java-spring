@@ -33,6 +33,12 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: "https://accounts.google.com"
+  kafka:
+    producer:
+      topic: product-created-events
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 mail:
   sender:
