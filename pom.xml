@@ -244,32 +244,14 @@
 							<generatorName>spring-cloud-streams3</generatorName>
 							<inputSpec>${product-service-asyncapi-spec.path}</inputSpec>
 							<configOptions>
+								<operationIds>productCreated</operationIds>
 								<role>provider</role>
 								<style>imperative</style>
 								<apiPackage>org.example.event.api</apiPackage>
 								<modelPackage>org.example.event.model</modelPackage>
-								<operationIds>sendProductCreated</operationIds>
 							</configOptions>
 						</configuration>
 					</execution>
-<!--					<execution>-->
-<!--						<id>generate-asyncapi-consumer</id>-->
-<!--						<phase>generate-sources</phase>-->
-<!--						<goals>-->
-<!--							<goal>generate</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<generatorName>spring-cloud-streams3</generatorName>-->
-<!--							<inputSpec>${product-service-asyncapi-spec.path}</inputSpec>-->
-<!--							<configOptions>-->
-<!--								<role>provider</role>-->
-<!--								<style>imperative</style>-->
-<!--								<apiPackage>org.example.event.api</apiPackage>-->
-<!--								<modelPackage>org.example.event.model</modelPackage>-->
-<!--								<operationIds>onProductCreated</operationIds>-->
-<!--							</configOptions>-->
-<!--						</configuration>-->
-<!--					</execution>-->
 				</executions>
 				<dependencies>
 					<dependency>

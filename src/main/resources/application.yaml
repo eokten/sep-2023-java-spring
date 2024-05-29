@@ -39,8 +39,13 @@ spring:
         binder:
           brokers: localhost
           defaultBrokerPort: 9092
+          producer-properties:
+            key:
+              serializer: org.apache.kafka.common.serialization.IntegerSerializer
+            value:
+              serializer: org.springframework.kafka.support.serializer.JsonSerializer
       bindings:
-        send-product-created-out-0:
+        product-created-out-0:
           destination: product-created-events
           content-type: application/json
 
@@ -60,4 +65,6 @@ logging:
   level:
     org:
       springframework:
-        security: DEBUG
+        cloud: DEBUG
+      apache:
+        kafka: DEBUG

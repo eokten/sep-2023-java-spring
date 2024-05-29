@@ -3,10 +3,9 @@ package org.okten.demo.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.example.event.api.IDefaultServiceEventsProducer;
+import org.example.event.api.IProductEventsProducer;
 import org.example.event.model.ProductCreatedPayload;
 import org.example.rest.model.ProductDto;
-import org.okten.demo.dto.event.ProductCreatedEvent;
 import org.okten.demo.entity.Product;
 import org.okten.demo.mapper.ProductMapper;
 import org.okten.demo.repository.ProductRepository;
@@ -27,12 +26,12 @@ public class ProductService {
 
     private final ProductMapper productMapper;
 
-    private final IDefaultServiceEventsProducer eventsProducer;
+    private final IProductEventsProducer productEventsProducer;
 
     @Transactional
     public ProductDto createProduct(ProductDto productDto) {
         Product savedProduct = productRepository.save(productMapper.mapToEntity(productDto));
-        eventsProducer.sendProductCreated(new ProductCreatedPayload()
+        productEventsProducer.productCreated(new ProductCreatedPayload()
                 .withProductId(savedProduct.getId().intValue())
                 .withName(savedProduct.getName())
                 .withCategory(savedProduct.getCategory())

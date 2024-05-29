@@ -21,21 +21,13 @@ channels:
         $ref: '#/components/messages/ProductCreated'
     description: The topic on which product created events may be produced and consumed.
 operations:
-  sendProductCreated:
+  productCreated:
     action: send
+    tags:
+      - name: Product
     channel:
       $ref: '#/channels/productEvents'
     summary: Produce product created event
-    traits:
-      - $ref: '#/components/operationTraits/kafka'
-    messages:
-      - $ref: '#/channels/productEvents/messages/ProductCreated'
-  onProductCreated:
-    action: receive
-    channel:
-      $ref: '#/channels/productEvents'
-    summary: >-
-      Consume product created event
     traits:
       - $ref: '#/components/operationTraits/kafka'
     messages:
@@ -64,11 +56,11 @@ components:
           description: Created product category
         name:
           type: string
-          description: Created product category
+          description: Created product name
         price:
           type: number
           format: double
-          description: Created product category
+          description: Created product price
   messageTraits:
     commonHeaders:
       headers:
