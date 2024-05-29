@@ -5,4 +5,4 @@ mvn clean compile
 ```
 
 Also, this command should be executed after any changes
-in '[product-service.openapi.yaml](src/main/resources/specification/product-service.openapi.yaml)'
+in '[product-service.openapi.yaml](src/main/resources/specification/product-service.openapi.yaml)'.
